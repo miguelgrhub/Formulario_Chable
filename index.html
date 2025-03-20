@@ -1,13 +1,16 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Formulario de Reserva</title>
+  <title>Encuesta Pre-Estancia</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      fond-color: red;
       margin: 20px;
+      max-width: 600px;
+    }
+    h1 {
+      margin-bottom: 1rem;
     }
     form {
       max-width: 600px;
@@ -15,40 +18,160 @@
     label {
       display: block;
       margin-top: 10px;
+      font-weight: bold;
     }
-    input, textarea, button {
+    input, textarea, select, button {
       width: 100%;
       padding: 8px;
       margin-top: 5px;
+      box-sizing: border-box;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .checkbox-group, .radio-group {
+      margin-top: 0.5rem;
+    }
+    .checkbox-group label,
+    .radio-group label {
+      display: inline-block;
+      margin-right: 1rem;
+      font-weight: normal;
+    }
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
-  <h1>Formulario de Reserva</h1>
+  <h1>Encuesta Pre-Estancia</h1>
+
+  <!-- FORMULARIO: Ajusta el "action" con la URL de tu Webhook en Make -->
   <form id="reservaForm" action="https://hook.us2.make.com/27yxe4qetnlnqo1xy94a9hkaqg46kuba" method="POST">
-    <label for="idReserva">ID Reserva:</label>
-    <input type="text" id="idReserva" name="idReserva" required>
 
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" required>
+    <!-- Campos para autocompletar desde la URL -->
+    <div class="form-group">
+      <label for="idReserva">ID Reserva:</label>
+      <input type="text" id="idReserva" name="idReserva" required>
 
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
+      <label for="nombre">Nombre:</label>
+      <input type="text" id="nombre" name="nombre" required>
 
-    <label for="comentarios">Comentarios:</label>
-    <textarea id="comentarios" name="comentarios"></textarea>
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+    </div>
+
+    <!-- 1. Nombre(s) y edad de acompañantes -->
+    <div class="form-group">
+      <label for="acompananteNombre">Nombre del acompañante:</label>
+      <input type="text" id="acompananteNombre" name="acompananteNombre" placeholder="Ej. Juan Pérez">
+
+      <label for="acompananteEdad">Edad del acompañante:</label>
+      <input type="number" id="acompananteEdad" name="acompananteEdad" placeholder="Ej. 30">
+    </div>
+
+    <!-- 2. Horario estimado de llegada -->
+    <div class="form-group">
+      <label>Horario estimado de llegada a la propiedad:</label>
+      <div style="display: flex; gap: 0.5rem;">
+        <input type="number" min="1" max="12" name="horaLlegada" placeholder="Ej. 10" style="width: 60px;">
+        <select name="ampmLlegada">
+          <option value="AM">AM</option>
+          <option value="PM">PM</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- 3. Viajará con su mascota (checkbox) -->
+    <div class="form-group">
+      <label>
+        <input type="checkbox" id="checkMascota" name="viajaConMascota" value="sí">
+        ¿Viajará con su mascota?
+      </label>
+      <div id="infoMascota" class="hidden">
+        <label for="detallesMascota">¿Nos podría compartir su nombre, peso y raza?</label>
+        <textarea id="detallesMascota" name="detallesMascota" rows="2" placeholder="Ej. Rocky, 10kg, bulldog..."></textarea>
+      </div>
+    </div>
+
+    <!-- 4. Motivo de viaje (checkboxes) -->
+    <div class="form-group">
+      <label>¿Cuál es su motivo de viaje?</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="motivoViaje[]" value="Ocasión especial"> Ocasión especial</label>
+        <label><input type="checkbox" name="motivoViaje[]" value="Vacaciones"> Vacaciones</label>
+        <label><input type="checkbox" name="motivoViaje[]" value="Bienestar"> Bienestar</label>
+      </div>
+    </div>
+
+    <!-- 5. ¿De dónde nos visitan? -->
+    <div class="form-group">
+      <label for="origenVisita">¿De dónde nos visitan?</label>
+      <input type="text" id="origenVisita" name="origenVisita" placeholder="Ciudad/País">
+    </div>
+
+    <!-- 6. Restricciones alimenticias (checkboxes) -->
+    <div class="form-group">
+      <label>¿Tiene alguna restricción alimenticia?</label>
+      <div class="checkbox-group">
+        <label><input type="checkbox" name="restriccionAlimenticia[]" value="No consumen gluten">No consumen gluten</label>
+        <label><input type="checkbox" name="restriccionAlimenticia[]" value="No consumen alcohol">No consumen alcohol</label>
+        <label><input type="checkbox" name="restriccionAlimenticia[]" value="Vegano">Vegano</label>
+        <label><input type="checkbox" name="restriccionAlimenticia[]" value="Vegetariano">Vegetariano</label>
+        <label><input type="checkbox" id="checkAlergia" name="restriccionAlimenticia[]" value="Alergia alimenticia">Alergia alimenticia</label>
+      </div>
+      <div id="infoAlergia" class="hidden">
+        <label for="detallesAlergia">Por favor, especifique su alergia:</label>
+        <textarea id="detallesAlergia" name="detallesAlergia" rows="2"></textarea>
+      </div>
+    </div>
+
+    <!-- 7. Bebidas y platillos preferidos -->
+    <div class="form-group">
+      <label for="bebidasPlatillos">¿Cuáles son sus bebidas y platillos preferidos?</label>
+      <textarea id="bebidasPlatillos" name="bebidasPlatillos" rows="2"></textarea>
+    </div>
+
+    <!-- 8. Snacks y postres preferidos -->
+    <div class="form-group">
+      <label for="snacksPostres">¿Cuáles son sus snacks y postres preferidos?</label>
+      <textarea id="snacksPostres" name="snacksPostres" rows="2"></textarea>
+    </div>
+
+    <!-- 9. Preferencia de café y lácteos -->
+    <div class="form-group">
+      <label for="preferenciaCafe">¿Cómo les gusta tomar su café y si tienen alguna preferencia en cuanto a lácteos?</label>
+      <textarea id="preferenciaCafe" name="preferenciaCafe" rows="2"></textarea>
+    </div>
+
+    <!-- 10. Hobbies favoritos -->
+    <div class="form-group">
+      <label for="hobbiesFavoritos">¿Cuáles son sus hobbies favoritos?</label>
+      <textarea id="hobbiesFavoritos" name="hobbiesFavoritos" rows="2"></textarea>
+    </div>
+
+    <!-- 11. Solicitud especial -->
+    <div class="form-group">
+      <label for="solicitudEspecial">¿Tiene alguna solicitud especial para su estancia?</label>
+      <textarea id="solicitudEspecial" name="solicitudEspecial" rows="2"></textarea>
+    </div>
+
+    <!-- Campo "comentarios" que ya tenías -->
+    <div class="form-group">
+      <label for="comentarios">Comentarios adicionales:</label>
+      <textarea id="comentarios" name="comentarios" rows="2"></textarea>
+    </div>
 
     <button type="submit">Enviar</button>
   </form>
 
   <script>
-    // Se obtienen los parámetros de la URL
+    // Autocompletar desde la URL: idReserva, nombre, email
     const params = new URLSearchParams(window.location.search);
     const idReserva = params.get('idReserva');
     const nombre = params.get('nombre');
     const email = params.get('email');
 
-    // Si existen, se autocompletan los campos correspondientes
     if (idReserva) {
       document.getElementById('idReserva').value = idReserva;
     }
@@ -58,6 +181,20 @@
     if (email) {
       document.getElementById('email').value = email;
     }
+
+    // Mostrar/ocultar detalles de la mascota
+    const checkMascota = document.getElementById('checkMascota');
+    const infoMascota = document.getElementById('infoMascota');
+    checkMascota.addEventListener('change', () => {
+      infoMascota.classList.toggle('hidden', !checkMascota.checked);
+    });
+
+    // Mostrar/ocultar detalles de alergia alimenticia
+    const checkAlergia = document.getElementById('checkAlergia');
+    const infoAlergia = document.getElementById('infoAlergia');
+    checkAlergia.addEventListener('change', () => {
+      infoAlergia.classList.toggle('hidden', !checkAlergia.checked);
+    });
   </script>
 </body>
 </html>

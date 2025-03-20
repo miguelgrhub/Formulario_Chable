@@ -1,51 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="utf-8">
-  <title>Mi Formulario</title>
+  <meta charset="UTF-8">
+  <title>Formulario de Reserva</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    form {
+      max-width: 600px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Reservación</h1>
-  <form id="reservaForm">
+  <h1>Formulario de Reserva</h1>
+  <form id="reservaForm" action="https://hook.eu1.make.com/xxxxxxxxxxxxxxxxxxx" method="POST">
+    <label for="idReserva">ID Reserva:</label>
+    <input type="text" id="idReserva" name="idReserva" required>
+
     <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" required>
+    <input type="text" id="nombre" name="nombre" required>
 
     <label for="email">Email:</label>
-    <input type="email" id="email" required>
+    <input type="email" id="email" name="email" required>
 
     <label for="comentarios">Comentarios:</label>
-    <textarea id="comentarios"></textarea>
+    <textarea id="comentarios" name="comentarios"></textarea>
 
     <button type="submit">Enviar</button>
   </form>
 
   <script>
-    const form = document.getElementById('reservaForm');
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+    // Se obtienen los parámetros de la URL
+    const params = new URLSearchParams(window.location.search);
+    const idReserva = params.get('idReserva');
+    const nombre = params.get('nombre');
+    const email = params.get('email');
 
-      const data = {
-        nombre: document.getElementById('nombre').value,
-        email: document.getElementById('email').value,
-        comentarios: document.getElementById('comentarios').value
-      };
-
-      try {
-        const response = await fetch('https://hook.us2.make.com/27yxe4qetnlnqo1xy94a9hkaqg46kuba', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(data)
-        });
-
-        if (response.ok) {
-          alert('¡Formulario enviado con éxito!');
-        } else {
-          alert('Error al enviar el formulario.');
-        }
-      } catch (error) {
-        alert('Error de conexión: ' + error.message);
-      }
-    });
+    // Si existen, se autocompletan los campos correspondientes
+    if (idReserva) {
+      document.getElementById('idReserva').value = idReserva;
+    }
+    if (nombre) {
+      document.getElementById('nombre').value = nombre;
+    }
+    if (email) {
+      document.getElementById('email').value = email;
+    }
   </script>
 </body>
 </html>

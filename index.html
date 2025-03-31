@@ -49,9 +49,6 @@
       outline: none;
       border-bottom-color: #a67c52;
     }
-    .form-group {
-      margin-bottom: 20px;
-    }
     .checkbox-group label,
     .radio-group label {
       font-size: 13px;
@@ -83,14 +80,6 @@
     .hidden {
       display: none;
     }
-    .flex-row {
-      display: flex;
-      gap: 10px;
-    }
-    .flex-row input,
-    .flex-row select {
-      flex: 1;
-    }
   </style>
 </head>
 <body>
@@ -110,22 +99,12 @@
 
     <div id="grupoAcomp" class="hidden">
       <label for="cuantosAcomp">¿Cuántos?</label>
-      <input type="number" id="cuantosAcomp" name="cuantosAcomp">
-
-      <div class="flex-row">
-        <div>
-          <label for="acompananteNombre">Nombre del acompañante</label>
-          <input type="text" id="acompananteNombre" name="acompananteNombre">
-        </div>
-        <div>
-          <label for="acompananteEdad">Edad</label>
-          <input type="number" id="acompananteEdad" name="acompananteEdad">
-        </div>
-      </div>
+      <input type="number" id="cuantosAcomp" name="cuantosAcomp" min="1" max="10">
+      <div id="acompanantesContainer"></div>
     </div>
 
     <label for="horaLlegada">Horario estimado de llegada</label>
-    <div class="flex-row">
+    <div style="display: flex; gap: 10px;">
       <input type="number" min="1" max="12" name="horaLlegada" placeholder="Ej. 10">
       <select name="ampmLlegada">
         <option value="AM">AM</option>
@@ -195,6 +174,34 @@
 
     document.getElementById('checkAlergia').addEventListener('change', e => {
       document.getElementById('infoAlergia').classList.toggle('hidden', !e.target.checked);
+    });
+
+    // Generar campos de acompañantes dinámicamente
+    document.getElementById('cuantosAcomp').addEventListener('input', function () {
+      const container = document.getElementById('acompanantesContainer');
+      container.innerHTML = ''; // Limpiar anteriores
+      const cantidad = parseInt(this.value) || 0;
+
+      for (let i = 1; i <= cantidad; i++) {
+        const nombreLabel = document.createElement('label');
+        nombreLabel.textContent = `Nombre del acompañante ${i}`;
+        const nombreInput = document.createElement('input');
+        nombreInput.type = 'text';
+        nombreInput.name = `acompananteNombre${i}`;
+        nombreInput.placeholder = `Ej. Juan Pérez`;
+
+        const edadLabel = document.createElement('label');
+        edadLabel.textContent = `Edad del acompañante ${i}`;
+        const edadInput = document.createElement('input');
+        edadInput.type = 'number';
+        edadInput.name = `acompananteEdad${i}`;
+        edadInput.placeholder = `Ej. 30`;
+
+        container.appendChild(nombreLabel);
+        container.appendChild(nombreInput);
+        container.appendChild(edadLabel);
+        container.appendChild(edadInput);
+      }
     });
   </script>
 </body>

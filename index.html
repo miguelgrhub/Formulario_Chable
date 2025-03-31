@@ -5,45 +5,53 @@
   <title>Encuesta Pre-Estancia</title>
   <style>
     body {
-      background-color: #e8e0d1;
+      background-color: #F2EDDE;
       font-family: 'Helvetica Neue', sans-serif;
-      color: #555;
       display: flex;
       justify-content: center;
-      padding: 40px 20px;
+      padding: 40px 0px;
     }
     form {
-      background-color: #f8f4ee;
-      padding: 40px 30px;
+      background-color: #F2EDDE;
+      padding: 90px 40px 40px 40px;
       border-radius: 6px;
       width: 100%;
-      max-width: 400px;
+      max-width: 600px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
       box-sizing: border-box;
+      position: relative;
     }
     h1 {
       text-transform: uppercase;
-      font-size: 10px;
+      font-size: 18px;
       letter-spacing: 1px;
-      color: #888;
+      color: #1E1E1E;
       text-align: center;
-      margin-bottom: 30px;
+      margin-bottom: 12%;
     }
     label {
-      font-size: 11px;
+      font-size: 15px;
+      font-weight: 600;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 3.8px;
       margin-top: 15px;
       display: block;
+      color: rgba(112, 109, 107, 0.70);
+      position: relative;
+        bottom: -.5%;
+        background-color: #f2edde;
+        width: fit-content;
+        left: 2%;
     }
     input, select, textarea {
       width: 100%;
-      border: none;
-      border-bottom: 1px solid #ccc;
+      border: 1px solid #ccc;
+      /* border-bottom: 1px solid #ccc; */
       background: transparent;
-      padding: 6px 0;
+      padding: 12px;
       font-size: 14px;
-      color: #333;
+      font-weight: 500;
+      color: #706D6BB2;
     }
     input:focus, select:focus, textarea:focus {
       outline: none;
@@ -56,16 +64,16 @@
       margin-top: 8px;
       text-transform: none;
     }
-    .checkbox-group input {
+    /* .checkbox-group input {
       margin-right: 8px;
-    }
+    } */
     textarea {
       resize: vertical;
     }
     button {
-      width: 100%;
-      padding: 10px;
-      background-color: #a67c52;
+      width: 40%;
+      padding: 15px;
+      background-color: #97938D;
       color: white;
       border: none;
       font-size: 12px;
@@ -80,128 +88,252 @@
     .hidden {
       display: none;
     }
+    .navReservaForm{
+        background-color: #706D6BB2;
+        width: 100%;
+        padding: 2% 0%;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    .navReservaForm img{
+        width: 25%;
+        max-width: 242px;
+        margin-left: 5%;
+    }
+    .groupCheckBox{
+        display: flex!important;
+        flex-direction: row-reverse!important;
+        width: 75%;
+        justify-content: space-between!important;
+        align-items: center!important;
+    }
+    .groupCheckBox input{
+        width: 15%;
+    }
+    .mb3{
+        margin-bottom: 3%;
+    }
+    .mb5{
+        margin-bottom: 5%;
+    }
+    @media (max-width:762px) {
+        form {
+            background-color: #F2EDDE;
+            padding: 90px 20px 40px 20px;
+            border-radius: 0;
+            width: 100%;
+            max-width: 100%;
+            box-shadow: none;
+            position: initial;
+        }
+        h1{
+            font-size: 16px;
+        }
+    }
+    @media (max-width:500px) {
+        h1{
+            font-size: 15px;
+        }
+        .navReservaForm{
+            padding: 3% 0%;
+        }
+        form{
+            padding: 70px 40px 40px 10px;
+        }
+        .groupCheckBox{
+            width: 100%;
+        }
+        .checkbox-group label, .radio-group label {
+            font-size: 12px;
+            letter-spacing: 1.8px;
+        }
+        label{
+            font-size: 13px;
+            letter-spacing: 2.8px;
+        }
+        .navReservaForm img{
+            width: 30%;
+        }
+    }
+    
   </style>
 </head>
 <body>
-  <form id="reservaForm" action="https://hook.us2.make.com/yfpxi0b2pmlcyv51s4gzshkkp8uzwg3c" method="POST">
-    <h1>Estamos preparando cada detalle<br>para que vivas una experiencia inigualable</h1>
+    <form id="reservaForm" action="https://hook.us2.make.com/cc3k2njndw4p0h1vqeqkicc6ne8mmje8" method="POST">
+        <div class="navReservaForm">
+            <img src="https://chablehotels.github.io/Formulario_Chable/logoChableForm.png" alt="">
+        </div>
+        <h1>Estamos preparando cada detalle<br>para que vivas una experiencia inigualable</h1>
+    
+        <label for="idReserva">ID Reserva:</label>
+        <input class="mb3" type="text" id="idReserva" name="idReserva" required>
+    
+        <label for="nombre">Nombre:</label>
+        <input class="mb3" type="text" id="nombre" name="nombre" required>
+    
+        <label for="email">E-mail:</label>
+        <input class="mb3" type="email" id="email" name="email" required>
+    
+        <label class="groupCheckBox mb3">
+          <input type="checkbox" id="checkAcomp" onclick="document.getElementById('grupoAcomp').classList.toggle('hidden', !this.checked)">
+          ¿Irás con acompañantes?
+        </label>
+    
+        <div id="grupoAcomp mb3" class="hidden">
+          <label class="" for="cuantosAcomp">¿Cuántos?</label>
+          <input type="number" id="cuantosAcomp" name="cuantosAcomp" min="1" max="10">
+          <div id="acompanantesContainer"></div>
+        </div>
+    
+        <!-- Campo oculto para detalles concatenados -->
+        <input type="hidden" id="detallesAcompanantes" name="detallesAcompanantes">
+    
+        <label for="horaLlegada">Horario estimado de llegada</label>
+        <div style="display: flex;" class="mb3">
+          <input type="number" min="1" max="12" name="horaLlegada" placeholder="Ej. 10">
+          <select name="ampmLlegada">
+            <option value="AM">AM</option>
+            <option value="PM">PM</option>
+          </select>
+        </div>
+    
+        <label class="groupCheckBox mb3">
+          <input type="checkbox" id="checkMascota" name="viajaConMascota" value="sí">
+          ¿Viajas con tu mascota?
+        </label>
+        <div id="infoMascota" class="hidden">
+          <label for="detallesMascota">Nombre, peso y raza:</label>
+          <textarea id="detallesMascota" name="detallesMascota" rows="2"></textarea>
+        </div>
+    
+        <label class="mb5">Motivo del viaje</label>
+        <div class="checkbox-group mb3">
+          <label class="groupCheckBox mb3"><input type="checkbox" name="motivoViaje[]" value="Ocasión especial"> Ocasión especial</label>
+          <label class="groupCheckBox mb3"><input type="checkbox" name="motivoViaje[]" value="Vacaciones"> Vacaciones</label>
+          <label class="groupCheckBox mb5"><input type="checkbox" name="motivoViaje[]" value="Bienestar"> Bienestar</label>
+        </div>
+    
+        <label for="origenVisita">Lugar de procedencia</label>
+        <input type="text" id="origenVisita" name="origenVisita" placeholder="Ciudad / País">
+    
+        <label class="mb5">Restricciones alimenticias</label>
+        <div class="checkbox-group mb3">
+          <label class="groupCheckBox mb3"><input type="checkbox" name="restriccionAlimenticia[]" value="No consumen gluten"> No consumen gluten</label>
+          <label class="groupCheckBox mb3"><input type="checkbox" name="restriccionAlimenticia[]" value="No consumen alcohol"> No consumen alcohol</label>
+          <label class="groupCheckBox mb3"><input type="checkbox" name="restriccionAlimenticia[]" value="Vegano"> Vegano</label>
+          <label class="groupCheckBox mb3"><input type="checkbox" name="restriccionAlimenticia[]" value="Vegetariano"> Vegetariano</label>
+          <label class="groupCheckBox mb3"><input type="checkbox" id="checkAlergia" name="restriccionAlimenticia[]" value="Alergia alimenticia"> Intolerancia o alergia</label>
+        </div>
+        <div id="infoAlergia" class="hidden">
+          <label for="detallesAlergia">¿Qué alergia alimentaria tiene?</label>
+          <textarea id="detallesAlergia" name="detallesAlergia" rows="2"></textarea>
+        </div>
+    
+        <label for="bebidasPlatillos">Alimentos y bebidas preferidos</label>
+        <textarea id="bebidasPlatillos" name="bebidasPlatillos"></textarea>
+    
+        <label for="preferenciaCafe">¿Cómo tomas tu café?</label>
+        <textarea id="preferenciaCafe" name="preferenciaCafe"></textarea>
+    
+        <label for="hobbiesFavoritos">¿Hobbies?</label>
+        <textarea id="hobbiesFavoritos" name="hobbiesFavoritos"></textarea>
+    
+        <label for="solicitudEspecial">Solicitudes especiales</label>
+        <textarea id="solicitudEspecial" name="solicitudEspecial"></textarea>
+    
+        <label for="comentarios">Comentarios adicionales</label>
+        <textarea id="comentarios" name="comentarios" rows="2"></textarea>
+    
+        <button type="submit">Enviar</button>
+    </form>
 
-    <label for="idReserva">ID Reserva:</label>
-    <input type="text" id="idReserva" name="idReserva" required>
+    <script>
+        // Autocompletar campos desde la URL
+        const params = new URLSearchParams(window.location.search);
+        ['idReserva', 'nombre', 'email'].forEach(param => {
+          const value = params.get(param);
+          if (value) document.getElementById(param).value = value;
+        });
+    
+        // Mostrar/ocultar detalles de mascota y alergia
+        document.getElementById('checkMascota').addEventListener('change', e => {
+          document.getElementById('infoMascota').classList.toggle('hidden', !e.target.checked);
+        });
+        document.getElementById('checkAlergia').addEventListener('change', e => {
+          document.getElementById('infoAlergia').classList.toggle('hidden', !e.target.checked);
+        });
+    
+        // Generar campos dinámicos para acompañantes y concatenar detalles en un campo oculto
+        document.getElementById('cuantosAcomp').addEventListener('input', function () {
+          const container = document.getElementById('acompanantesContainer');
+          container.innerHTML = ''; // Limpiar campos anteriores
+          const cantidad = parseInt(this.value) || 0;
+          for (let i = 1; i <= cantidad; i++) {
+            const nombreLabel = document.createElement('label');
+            nombreLabel.textContent = Nombre del acompañante ${i};
+            const nombreInput = document.createElement('input');
+            nombreInput.type = 'text';
+            nombreInput.name = acompananteNombre${i};
+            nombreInput.placeholder = Ej. Juan Pérez;
+    
+            const edadLabel = document.createElement('label');
+            edadLabel.textContent = Edad del acompañante ${i};
+            const edadInput = document.createElement('input');
+            edadInput.type = 'number';
+            edadInput.name = acompananteEdad${i};
+            edadInput.placeholder = Ej. 30;
+    
+            container.appendChild(nombreLabel);
+            container.appendChild(nombreInput);
+            container.appendChild(edadLabel);
+            container.appendChild(edadInput);
+    
+            // Actualizar campo oculto en tiempo real
+            nombreInput.addEventListener('input', updateAcompanantes);
+            edadInput.addEventListener('input', updateAcompanantes);
+          }
+          updateAcompanantes(); // Actualizar al cambiar la cantidad
+        });
+    
+        function updateAcompanantes() {
+          const cantidad = parseInt(document.getElementById('cuantosAcomp').value) || 0;
+          let detalles = '';
+          for (let i = 1; i <= cantidad; i++) {
+            const nombreInput = document.getElementsByName(acompananteNombre${i})[0];
+            const edadInput = document.getElementsByName(acompananteEdad${i})[0];
+            const nombre = nombreInput ? nombreInput.value.trim() : '';
+            const edad = edadInput ? edadInput.value.trim() : '';
+            if (nombre || edad) {
+              detalles += `Acompañante ${i}: ${nombre} - ${edad}; `;
+            }
+          }
+          document.getElementById('detallesAcompanantes').value = detalles.trim();
+        }
+      </script>
 
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" required>
-
-    <label for="email">E-mail:</label>
-    <input type="email" id="email" name="email" required>
-
-    <label><input type="checkbox" id="checkAcomp" onclick="document.getElementById('grupoAcomp').classList.toggle('hidden', !this.checked)"> ¿Irás con acompañantes?</label>
-
-    <div id="grupoAcomp" class="hidden">
-      <label for="cuantosAcomp">¿Cuántos?</label>
-      <input type="number" id="cuantosAcomp" name="cuantosAcomp" min="1" max="10">
-      <div id="acompanantesContainer"></div>
-    </div>
-
-    <label for="horaLlegada">Horario estimado de llegada</label>
-    <div style="display: flex; gap: 10px;">
-      <input type="number" min="1" max="12" name="horaLlegada" placeholder="Ej. 10">
-      <select name="ampmLlegada">
-        <option value="AM">AM</option>
-        <option value="PM">PM</option>
-      </select>
-    </div>
-
-    <label><input type="checkbox" id="checkMascota" name="viajaConMascota" value="sí"> ¿Viajas con tu mascota?</label>
-    <div id="infoMascota" class="hidden">
-      <label for="detallesMascota">Nombre, peso y raza:</label>
-      <textarea id="detallesMascota" name="detallesMascota" rows="2"></textarea>
-    </div>
-
-    <label>Motivo del viaje</label>
-    <div class="checkbox-group">
-      <label><input type="checkbox" name="motivoViaje[]" value="Ocasión especial"> Ocasión especial</label>
-      <label><input type="checkbox" name="motivoViaje[]" value="Vacaciones"> Vacaciones</label>
-      <label><input type="checkbox" name="motivoViaje[]" value="Bienestar"> Bienestar</label>
-    </div>
-
-    <label for="origenVisita">Lugar de procedencia</label>
-    <input type="text" id="origenVisita" name="origenVisita" placeholder="Ciudad / País">
-
-    <label>Restricciones alimenticias</label>
-    <div class="checkbox-group">
-      <label><input type="checkbox" name="restriccionAlimenticia[]" value="No consumen gluten"> No consumen gluten</label>
-      <label><input type="checkbox" name="restriccionAlimenticia[]" value="No consumen alcohol"> No consumen alcohol</label>
-      <label><input type="checkbox" name="restriccionAlimenticia[]" value="Vegano"> Vegano</label>
-      <label><input type="checkbox" name="restriccionAlimenticia[]" value="Vegetariano"> Vegetariano</label>
-      <label><input type="checkbox" id="checkAlergia" name="restriccionAlimenticia[]" value="Alergia alimenticia"> Intolerancia o alergia</label>
-    </div>
-    <div id="infoAlergia" class="hidden">
-      <label for="detallesAlergia">¿Qué alergia alimentaria tiene?</label>
-      <textarea id="detallesAlergia" name="detallesAlergia" rows="2"></textarea>
-    </div>
-
-    <label for="bebidasPlatillos">Alimentos y bebidas preferidos</label>
-    <textarea id="bebidasPlatillos" name="bebidasPlatillos"></textarea>
-
-    <label for="preferenciaCafe">¿Cómo tomas tu café?</label>
-    <textarea id="preferenciaCafe" name="preferenciaCafe"></textarea>
-
-    <label for="hobbiesFavoritos">¿Hobbies?</label>
-    <textarea id="hobbiesFavoritos" name="hobbiesFavoritos"></textarea>
-
-    <label for="solicitudEspecial">Solicitudes especiales</label>
-    <textarea id="solicitudEspecial" name="solicitudEspecial"></textarea>
-
-    <label for="comentarios">Comentarios adicionales</label>
-    <textarea id="comentarios" name="comentarios" rows="2"></textarea>
-
-    <button type="submit">Enviar</button>
-  </form>
-
-  <script>
-    // Autocompletar desde la URL
-    const params = new URLSearchParams(window.location.search);
-    ['idReserva', 'nombre', 'email'].forEach(param => {
-      const value = params.get(param);
-      if (value) document.getElementById(param).value = value;
-    });
-
-    // Mostrar campos condicionales
-    document.getElementById('checkMascota').addEventListener('change', e => {
-      document.getElementById('infoMascota').classList.toggle('hidden', !e.target.checked);
-    });
-
-    document.getElementById('checkAlergia').addEventListener('change', e => {
-      document.getElementById('infoAlergia').classList.toggle('hidden', !e.target.checked);
-    });
-
-    // Generar campos de acompañantes dinámicamente
-    document.getElementById('cuantosAcomp').addEventListener('input', function () {
-      const container = document.getElementById('acompanantesContainer');
-      container.innerHTML = ''; // Limpiar anteriores
-      const cantidad = parseInt(this.value) || 0;
-
-      for (let i = 1; i <= cantidad; i++) {
-        const nombreLabel = document.createElement('label');
-        nombreLabel.textContent = `Nombre del acompañante ${i}`;
-        const nombreInput = document.createElement('input');
-        nombreInput.type = 'text';
-        nombreInput.name = `acompananteNombre${i}`;
-        nombreInput.placeholder = `Ej. Juan Pérez`;
-
-        const edadLabel = document.createElement('label');
-        edadLabel.textContent = `Edad del acompañante ${i}`;
-        const edadInput = document.createElement('input');
-        edadInput.type = 'number';
-        edadInput.name = `acompananteEdad${i}`;
-        edadInput.placeholder = `Ej. 30`;
-
-        container.appendChild(nombreLabel);
-        container.appendChild(nombreInput);
-        container.appendChild(edadLabel);
-        container.appendChild(edadInput);
-      }
+<script>
+    document.getElementById('reservaForm').addEventListener('submit', function(e) {
+      e.preventDefault(); // Evita el envío tradicional
+  
+      const formData = new FormData(this);
+      
+      fetch(this.action, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (response.ok) {
+          // Reemplaza el formulario por un mensaje de agradecimiento
+          document.getElementById('reservaForm').innerHTML = '<div class="navReservaForm"><img src="https://chablehotels.github.io/Formulario_Chable/logoChableForm.png"></div><h2 style="color: rgba(112, 109, 107, 0.70);">¡Gracias por completar el formulario!</h2><p>Hemos recibido su información y nos pondremos en contacto.</p>';
+        } else {
+          alert('Hubo un problema. Por favor intente de nuevo.');
+        }
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error en el envío. Por favor intente de nuevo.');
+      });
     });
   </script>
 </body>

@@ -5,195 +5,196 @@
   <title>Encuesta Pre-Estancia</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      margin: 20px;
-      max-width: 600px;
-    }
-    h1 {
-      margin-bottom: 1rem;
+      background-color: #e8e0d1;
+      font-family: 'Helvetica Neue', sans-serif;
+      color: #555;
+      display: flex;
+      justify-content: center;
+      padding: 40px 20px;
     }
     form {
-      max-width: 600px;
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-    input, textarea, select, button {
+      background-color: #f8f4ee;
+      padding: 40px 30px;
+      border-radius: 6px;
       width: 100%;
-      padding: 8px;
-      margin-top: 5px;
+      max-width: 400px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       box-sizing: border-box;
     }
-    .form-group {
-      margin-bottom: 1rem;
+    h1 {
+      text-transform: uppercase;
+      font-size: 10px;
+      letter-spacing: 1px;
+      color: #888;
+      text-align: center;
+      margin-bottom: 30px;
     }
-    .checkbox-group, .radio-group {
-      margin-top: 0.5rem;
+    label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-top: 15px;
+      display: block;
+    }
+    input, select, textarea {
+      width: 100%;
+      border: none;
+      border-bottom: 1px solid #ccc;
+      background: transparent;
+      padding: 6px 0;
+      font-size: 14px;
+      color: #333;
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-bottom-color: #a67c52;
+    }
+    .form-group {
+      margin-bottom: 20px;
     }
     .checkbox-group label,
     .radio-group label {
-      display: inline-block;
-      margin-right: 1rem;
-      font-weight: normal;
+      font-size: 13px;
+      display: block;
+      margin-top: 8px;
+      text-transform: none;
+    }
+    .checkbox-group input {
+      margin-right: 8px;
+    }
+    textarea {
+      resize: vertical;
+    }
+    button {
+      width: 100%;
+      padding: 10px;
+      background-color: #a67c52;
+      color: white;
+      border: none;
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    button:hover {
+      background-color: #916846;
     }
     .hidden {
       display: none;
     }
+    .flex-row {
+      display: flex;
+      gap: 10px;
+    }
+    .flex-row input,
+    .flex-row select {
+      flex: 1;
+    }
   </style>
 </head>
 <body>
-  <h1>Encuesta Pre-Estancia</h1>
-
-  <!-- FORMULARIO: Ajusta el "action" con la URL de tu Webhook en Make -->
   <form id="reservaForm" action="https://hook.us2.make.com/yfpxi0b2pmlcyv51s4gzshkkp8uzwg3c" method="POST">
+    <h1>Estamos preparando cada detalle<br>para que vivas una experiencia inigualable</h1>
 
-    <!-- Campos para autocompletar desde la URL -->
-    <div class="form-group">
-      <label for="idReserva">ID Reserva:</label>
-      <input type="text" id="idReserva" name="idReserva" required>
+    <label for="idReserva">ID Reserva:</label>
+    <input type="text" id="idReserva" name="idReserva" required>
 
-      <label for="nombre">Nombre:</label>
-      <input type="text" id="nombre" name="nombre" required>
+    <label for="nombre">Nombre:</label>
+    <input type="text" id="nombre" name="nombre" required>
 
-      <label for="email">Email:</label>
-      <input type="email" id="email" name="email" required>
-    </div>
+    <label for="email">E-mail:</label>
+    <input type="email" id="email" name="email" required>
 
-    <!-- 1. Nombre(s) y edad de acompañantes -->
-    <div class="form-group">
-      <label for="acompananteNombre">Nombre del acompañante:</label>
-      <input type="text" id="acompananteNombre" name="acompananteNombre" placeholder="Ej. Juan Pérez">
+    <label><input type="checkbox" id="checkAcomp" onclick="document.getElementById('grupoAcomp').classList.toggle('hidden', !this.checked)"> ¿Irás con acompañantes?</label>
 
-      <label for="acompananteEdad">Edad del acompañante:</label>
-      <input type="number" id="acompananteEdad" name="acompananteEdad" placeholder="Ej. 30">
-    </div>
+    <div id="grupoAcomp" class="hidden">
+      <label for="cuantosAcomp">¿Cuántos?</label>
+      <input type="number" id="cuantosAcomp" name="cuantosAcomp">
 
-    <!-- 2. Horario estimado de llegada -->
-    <div class="form-group">
-      <label>Horario estimado de llegada a la propiedad:</label>
-      <div style="display: flex; gap: 0.5rem;">
-        <input type="number" min="1" max="12" name="horaLlegada" placeholder="Ej. 10" style="width: 60px;">
-        <select name="ampmLlegada">
-          <option value="AM">AM</option>
-          <option value="PM">PM</option>
-        </select>
+      <div class="flex-row">
+        <div>
+          <label for="acompananteNombre">Nombre del acompañante</label>
+          <input type="text" id="acompananteNombre" name="acompananteNombre">
+        </div>
+        <div>
+          <label for="acompananteEdad">Edad</label>
+          <input type="number" id="acompananteEdad" name="acompananteEdad">
+        </div>
       </div>
     </div>
 
-    <!-- 3. Viajará con su mascota (checkbox) -->
-    <div class="form-group">
-      <label>
-        <input type="checkbox" id="checkMascota" name="viajaConMascota" value="sí">
-        ¿Viajará con su mascota?
-      </label>
-      <div id="infoMascota" class="hidden">
-        <label for="detallesMascota">¿Nos podría compartir su nombre, peso y raza?</label>
-        <textarea id="detallesMascota" name="detallesMascota" rows="2" placeholder="Ej. Rocky, 10kg, bulldog..."></textarea>
-      </div>
+    <label for="horaLlegada">Horario estimado de llegada</label>
+    <div class="flex-row">
+      <input type="number" min="1" max="12" name="horaLlegada" placeholder="Ej. 10">
+      <select name="ampmLlegada">
+        <option value="AM">AM</option>
+        <option value="PM">PM</option>
+      </select>
     </div>
 
-    <!-- 4. Motivo de viaje (checkboxes) -->
-    <div class="form-group">
-      <label>¿Cuál es su motivo de viaje?</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="motivoViaje[]" value="Ocasión especial"> Ocasión especial</label>
-        <label><input type="checkbox" name="motivoViaje[]" value="Vacaciones"> Vacaciones</label>
-        <label><input type="checkbox" name="motivoViaje[]" value="Bienestar"> Bienestar</label>
-      </div>
+    <label><input type="checkbox" id="checkMascota" name="viajaConMascota" value="sí"> ¿Viajas con tu mascota?</label>
+    <div id="infoMascota" class="hidden">
+      <label for="detallesMascota">Nombre, peso y raza:</label>
+      <textarea id="detallesMascota" name="detallesMascota" rows="2"></textarea>
     </div>
 
-    <!-- 5. ¿De dónde nos visitan? -->
-    <div class="form-group">
-      <label for="origenVisita">¿De dónde nos visitan?</label>
-      <input type="text" id="origenVisita" name="origenVisita" placeholder="Ciudad/País">
+    <label>Motivo del viaje</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="motivoViaje[]" value="Ocasión especial"> Ocasión especial</label>
+      <label><input type="checkbox" name="motivoViaje[]" value="Vacaciones"> Vacaciones</label>
+      <label><input type="checkbox" name="motivoViaje[]" value="Bienestar"> Bienestar</label>
     </div>
 
-    <!-- 6. Restricciones alimenticias (checkboxes) -->
-    <div class="form-group">
-      <label>¿Tiene alguna restricción alimenticia?</label>
-      <div class="checkbox-group">
-        <label><input type="checkbox" name="restriccionAlimenticia[]" value="No consumen gluten">No consumen gluten</label>
-        <label><input type="checkbox" name="restriccionAlimenticia[]" value="No consumen alcohol">No consumen alcohol</label>
-        <label><input type="checkbox" name="restriccionAlimenticia[]" value="Vegano">Vegano</label>
-        <label><input type="checkbox" name="restriccionAlimenticia[]" value="Vegetariano">Vegetariano</label>
-        <label><input type="checkbox" id="checkAlergia" name="restriccionAlimenticia[]" value="Alergia alimenticia">Alergia alimenticia</label>
-      </div>
-      <div id="infoAlergia" class="hidden">
-        <label for="detallesAlergia">Por favor, especifique su alergia:</label>
-        <textarea id="detallesAlergia" name="detallesAlergia" rows="2"></textarea>
-      </div>
+    <label for="origenVisita">Lugar de procedencia</label>
+    <input type="text" id="origenVisita" name="origenVisita" placeholder="Ciudad / País">
+
+    <label>Restricciones alimenticias</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="restriccionAlimenticia[]" value="No consumen gluten"> No consumen gluten</label>
+      <label><input type="checkbox" name="restriccionAlimenticia[]" value="No consumen alcohol"> No consumen alcohol</label>
+      <label><input type="checkbox" name="restriccionAlimenticia[]" value="Vegano"> Vegano</label>
+      <label><input type="checkbox" name="restriccionAlimenticia[]" value="Vegetariano"> Vegetariano</label>
+      <label><input type="checkbox" id="checkAlergia" name="restriccionAlimenticia[]" value="Alergia alimenticia"> Intolerancia o alergia</label>
+    </div>
+    <div id="infoAlergia" class="hidden">
+      <label for="detallesAlergia">¿Qué alergia alimentaria tiene?</label>
+      <textarea id="detallesAlergia" name="detallesAlergia" rows="2"></textarea>
     </div>
 
-    <!-- 7. Bebidas y platillos preferidos -->
-    <div class="form-group">
-      <label for="bebidasPlatillos">¿Cuáles son sus bebidas y platillos preferidos?</label>
-      <textarea id="bebidasPlatillos" name="bebidasPlatillos" rows="2"></textarea>
-    </div>
+    <label for="bebidasPlatillos">Alimentos y bebidas preferidos</label>
+    <textarea id="bebidasPlatillos" name="bebidasPlatillos"></textarea>
 
-    <!-- 8. Snacks y postres preferidos -->
-    <div class="form-group">
-      <label for="snacksPostres">¿Cuáles son sus snacks y postres preferidos?</label>
-      <textarea id="snacksPostres" name="snacksPostres" rows="2"></textarea>
-    </div>
+    <label for="preferenciaCafe">¿Cómo tomas tu café?</label>
+    <textarea id="preferenciaCafe" name="preferenciaCafe"></textarea>
 
-    <!-- 9. Preferencia de café y lácteos -->
-    <div class="form-group">
-      <label for="preferenciaCafe">¿Cómo les gusta tomar su café y si tienen alguna preferencia en cuanto a lácteos?</label>
-      <textarea id="preferenciaCafe" name="preferenciaCafe" rows="2"></textarea>
-    </div>
+    <label for="hobbiesFavoritos">¿Hobbies?</label>
+    <textarea id="hobbiesFavoritos" name="hobbiesFavoritos"></textarea>
 
-    <!-- 10. Hobbies favoritos -->
-    <div class="form-group">
-      <label for="hobbiesFavoritos">¿Cuáles son sus hobbies favoritos?</label>
-      <textarea id="hobbiesFavoritos" name="hobbiesFavoritos" rows="2"></textarea>
-    </div>
+    <label for="solicitudEspecial">Solicitudes especiales</label>
+    <textarea id="solicitudEspecial" name="solicitudEspecial"></textarea>
 
-    <!-- 11. Solicitud especial -->
-    <div class="form-group">
-      <label for="solicitudEspecial">¿Tiene alguna solicitud especial para su estancia?</label>
-      <textarea id="solicitudEspecial" name="solicitudEspecial" rows="2"></textarea>
-    </div>
-
-    <!-- Campo "comentarios" que ya tenías -->
-    <div class="form-group">
-      <label for="comentarios">Comentarios adicionales:</label>
-      <textarea id="comentarios" name="comentarios" rows="2"></textarea>
-    </div>
+    <label for="comentarios">Comentarios adicionales</label>
+    <textarea id="comentarios" name="comentarios" rows="2"></textarea>
 
     <button type="submit">Enviar</button>
   </form>
 
   <script>
-    // Autocompletar desde la URL: idReserva, nombre, email
+    // Autocompletar desde la URL
     const params = new URLSearchParams(window.location.search);
-    const idReserva = params.get('idReserva');
-    const nombre = params.get('nombre');
-    const email = params.get('email');
-
-    if (idReserva) {
-      document.getElementById('idReserva').value = idReserva;
-    }
-    if (nombre) {
-      document.getElementById('nombre').value = nombre;
-    }
-    if (email) {
-      document.getElementById('email').value = email;
-    }
-
-    // Mostrar/ocultar detalles de la mascota
-    const checkMascota = document.getElementById('checkMascota');
-    const infoMascota = document.getElementById('infoMascota');
-    checkMascota.addEventListener('change', () => {
-      infoMascota.classList.toggle('hidden', !checkMascota.checked);
+    ['idReserva', 'nombre', 'email'].forEach(param => {
+      const value = params.get(param);
+      if (value) document.getElementById(param).value = value;
     });
 
-    // Mostrar/ocultar detalles de alergia alimenticia
-    const checkAlergia = document.getElementById('checkAlergia');
-    const infoAlergia = document.getElementById('infoAlergia');
-    checkAlergia.addEventListener('change', () => {
-      infoAlergia.classList.toggle('hidden', !checkAlergia.checked);
+    // Mostrar campos condicionales
+    document.getElementById('checkMascota').addEventListener('change', e => {
+      document.getElementById('infoMascota').classList.toggle('hidden', !e.target.checked);
+    });
+
+    document.getElementById('checkAlergia').addEventListener('change', e => {
+      document.getElementById('infoAlergia').classList.toggle('hidden', !e.target.checked);
     });
   </script>
 </body>

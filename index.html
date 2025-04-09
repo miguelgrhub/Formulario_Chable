@@ -56,8 +56,7 @@
       margin-top: 8px;
       text-transform: none;
     }
-    .checkbox-group input,
-    .radio-group input {
+    .checkbox-group input {
       margin-right: 8px;
     }
     textarea {
@@ -120,22 +119,22 @@
     </div>
 
     <label>Motivo del viaje</label>
-    <div class="radio-group">
-      <label><input type="radio" name="motivoViaje" value="Ocasión especial">Ocasión especial</label>
-      <label><input type="radio" name="motivoViaje" value="Vacaciones">Vacaciones</label>
-      <label><input type="radio" name="motivoViaje" value="Bienestar">Bienestar</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="motivoViaje[]" value="Ocasión especial">Ocasión especial</label>
+      <label><input type="checkbox" name="motivoViaje[]" value="Vacaciones">Vacaciones</label>
+      <label><input type="checkbox" name="motivoViaje[]" value="Bienestar">Bienestar</label>
     </div>
 
     <label for="origenVisita">Lugar de procedencia</label>
     <input type="text" id="origenVisita" name="origenVisita" placeholder="Ciudad / País">
 
     <label>Restricciones alimenticias</label>
-    <div class="radio-group">
-      <label><input type="radio" name="restriccionAlimenticia" value="No consumen gluten">No consumen gluten</label>
-      <label><input type="radio" name="restriccionAlimenticia" value="No consumen alcohol">No consumen alcohol</label>
-      <label><input type="radio" name="restriccionAlimenticia" value="Vegano">Vegano</label>
-      <label><input type="radio" name="restriccionAlimenticia" value="Vegetariano">Vegetariano</label>
-      <label><input type="radio" id="checkAlergia" name="restriccionAlimenticia" value="Alergia alimenticia">Intolerancia o alergia</label>
+    <div class="checkbox-group">
+      <label><input type="checkbox" name="restriccionAlimenticia[]" value="No consumen gluten">No consumen gluten</label>
+      <label><input type="checkbox" name="restriccionAlimenticia[]" value="No consumen alcohol">No consumen alcohol</label>
+      <label><input type="checkbox" name="restriccionAlimenticia[]" value="Vegano">Vegano</label>
+      <label><input type="checkbox" name="restriccionAlimenticia[]" value="Vegetariano">Vegetariano</label>
+      <label><input type="checkbox" id="checkAlergia" name="restriccionAlimenticia[]" value="Alergia alimenticia">Intolerancia o alergia</label>
     </div>
     <div id="infoAlergia" class="hidden">
       <label for="detallesAlergia">¿Qué alergia alimentaria tiene?</label>
@@ -173,15 +172,8 @@
       document.getElementById('infoMascota').classList.toggle('hidden', !e.target.checked);
     });
 
-    // Actualizar mostrar campo de alergia según la selección en Restricciones alimenticias
-    document.querySelectorAll('input[name="restriccionAlimenticia"]').forEach(radio => {
-      radio.addEventListener('change', function(e) {
-        if (this.value === "Alergia alimenticia") {
-          document.getElementById('infoAlergia').classList.remove('hidden');
-        } else {
-          document.getElementById('infoAlergia').classList.add('hidden');
-        }
-      });
+    document.getElementById('checkAlergia').addEventListener('change', e => {
+      document.getElementById('infoAlergia').classList.toggle('hidden', !e.target.checked);
     });
 
     // Generar campos de acompañantes dinámicamente
